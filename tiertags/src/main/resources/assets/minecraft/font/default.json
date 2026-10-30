@@ -1,0 +1,184 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/vanilla.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea01"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/smp.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea02"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/sword.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea03"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/pot.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea04"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/uhc.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea05"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/axe.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea06"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/nethop.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea07"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/mace.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea08"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/minecart.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea09"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/dia_crystal.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea0a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/debuff.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea0b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/elytra.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea0c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/speed.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea0d"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/creeper.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea0e"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/manhunt.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea0f"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/dia_smp.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea10"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/bow.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea11"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/bed.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea12"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/og_vanilla.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea13"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:icons/trident.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea14"
+      ]
+    }
+  ]
+}
