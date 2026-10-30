@@ -6,7 +6,7 @@
   "description": "Shows players' MCTiers, PvPTiers and SubTiers rankings on their nametag. Use /tiers <player> for a full profile.",
   "authors": ["mirkotarvis"],
   "license": "MPL-2.0",
-  "icon": "assets/tiertags/icon.png",
+     "icon": "assets/tiertags/icon_new.png",
   "environment": "client",
   "entrypoints": {
     "client": [
