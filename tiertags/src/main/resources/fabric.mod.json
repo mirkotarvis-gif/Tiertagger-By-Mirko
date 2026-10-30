@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "tiertags",
   "version": "${version}",
-  "name": "TierTags",
+     "name": "Mirko's TierTagger",
   "description": "Shows players' MCTiers, PvPTiers and SubTiers rankings on their nametag. Use /tiers <player> for a full profile.",
   "authors": ["mirkotarvis"],
   "license": "MPL-2.0",
