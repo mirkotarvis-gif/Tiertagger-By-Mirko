@@ -4,10 +4,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/** Display name, icon glyph and color for every gamemode on the three tierlists. */
+/** Display name, icon glyph and color for every gamemode on the tierlists. */
 public final class Modes {
     public record Mode(String title, char icon, int color) {
     }
@@ -37,8 +38,14 @@ public final class Modes {
             Map.entry("bow", new Mode("Bow", '', 0x663D10)),
             Map.entry("bed", new Mode("Bed", '', 0xFF0000)),
             Map.entry("og_vanilla", new Mode("OG Vanilla", '', 0xFFAA00)),
-            Map.entry("trident", new Mode("Trident", '', 0x579B8C))
+            Map.entry("trident", new Mode("Trident", '', 0x579B8C)),
+            // GoatTierList
+            Map.entry("diapot", new Mode("Diamond Pot", '\uea04', 0x55FFFF)),
+            Map.entry("spearmace", new Mode("Spear Mace", '\uea08', 0x9AA7B0))
     );
+
+    /** Gamemode ids for the "Gamemode" setting, in a stable order. */
+    public static final List<String> IDS = MODES.keySet().stream().sorted().toList();
 
     public static Mode get(String id) {
         Mode mode = MODES.get(id.toLowerCase(Locale.ROOT));

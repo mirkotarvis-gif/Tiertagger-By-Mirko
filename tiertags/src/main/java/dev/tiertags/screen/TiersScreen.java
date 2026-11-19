@@ -2,6 +2,7 @@ package dev.tiertags.screen;
 
 import com.mojang.authlib.GameProfile;
 import dev.tiertags.TierTags;
+import dev.tiertags.config.TierTagsConfigScreen;
 import dev.tiertags.data.Modes;
 import dev.tiertags.data.PlayerTiers;
 import dev.tiertags.data.Profile;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.player.PlayerSkin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -66,7 +68,8 @@ public class TiersScreen extends Screen {
                 if (error != null) {
                     lookupError = "Couldn't look up " + playerName + " (Mojang API error)";
                 } else if (result.isEmpty()) {
-                    lookupError = "No Minecraft account called " + playerName;
+                    // No premium account (cracked player): name-based lists like GoatTierList still work
+                    uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(StandardCharsets.UTF_8));
                 } else {
                     uuid = result.get();
                 }
@@ -93,8 +96,8 @@ public class TiersScreen extends Screen {
         }
 
         // Tierlist tabs
-        int tabWidth = 80;
         int gap = 4;
+        int tabWidth = Math.min(80, (this.width - 20) / TierList.values().length - gap);
         int tabsX = this.width / 2 - (TierList.values().length * (tabWidth + gap) - gap) / 2;
         for (TierList list : TierList.values()) {
             Button button = Button.builder(Component.literal(list.displayName()), b -> {
@@ -108,8 +111,11 @@ public class TiersScreen extends Screen {
             tabsX += tabWidth + gap;
         }
 
+        this.addRenderableWidget(Button.builder(Component.literal("Settings"), b -> this.minecraft.setScreen(new TierTagsConfigScreen(this)))
+                .bounds(this.width / 2 - 155, this.height - 27, 150, 20)
+                .build());
         this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, b -> this.onClose())
-                .bounds(this.width / 2 - 100, this.height - 27, 200, 20)
+                .bounds(this.width / 2 + 5, this.height - 27, 150, 20)
                 .build());
 
         if (this.skin != null) {
@@ -143,7 +149,7 @@ public class TiersScreen extends Screen {
 
         UUID id = this.uuid;
         if (id != null) {
-            int version = TierCache.get(id).version();
+            int version = TierCache.get(id, this.playerName).version();
             if (version != this.shownVersion) {
                 this.shownVersion = version;
                 this.rebuildWidgets();
@@ -171,7 +177,12 @@ public class TiersScreen extends Screen {
             return;
         }
 
-        PlayerTiers.Result result = TierCache.get(id).get(this.tab);
+        if (!this.tab.enabled()) {
+            graphics.drawString(this.font, this.tab.displayName() + " is turned off in Settings", x, midY, GRAY);
+            return;
+        }
+
+        PlayerTiers.Result result = TierCache.get(id, this.playerName).get(this.tab);
         switch (result.status()) {
             case LOADING -> graphics.drawString(this.font, "Loading " + this.tab.displayName() + "...", x, midY, GRAY);
             case NOT_FOUND -> graphics.drawString(this.font, "Not ranked on " + this.tab.displayName(), x, midY, GRAY);
@@ -199,8 +210,8 @@ public class TiersScreen extends Screen {
     @Nullable
     private Profile currentProfile() {
         UUID id = this.uuid;
-        if (id == null) return null;
-        PlayerTiers.Result result = TierCache.get(id).get(this.tab);
+        if (id == null || !this.tab.enabled()) return null;
+        PlayerTiers.Result result = TierCache.get(id, this.playerName).get(this.tab);
         return result.status() == PlayerTiers.Status.FOUND ? result.profile() : null;
     }
 

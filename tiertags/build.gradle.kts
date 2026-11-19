@@ -9,11 +9,18 @@ base {
     archivesName = project.property("archives_base_name") as String
 }
 
+repositories {
+    // Mod Menu
+    maven("https://maven.terraformersmc.com/releases/")
+}
+
 dependencies {
     minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
     mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_api_version")}")
+    // Optional: only needed to compile the Mod Menu settings button, not bundled in the jar
+    modCompileOnly("com.terraformersmc:modmenu:${project.property("modmenu_version")}")
 }
 
 java {

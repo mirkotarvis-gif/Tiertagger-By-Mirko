@@ -1,6 +1,8 @@
 package dev.tiertags;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
+import dev.tiertags.config.TierTagsConfig;
+import dev.tiertags.config.TierTagsConfigScreen;
 import dev.tiertags.screen.TiersScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -26,6 +28,15 @@ public class TierTags implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        TierTagsConfig.load();
+
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(
+                literal("tiertags").executes(ctx -> {
+                    pendingScreen = new TierTagsConfigScreen(null);
+                    return 1;
+                })
+        ));
+
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(
                 literal("tiers")
                         .then(argument("player", StringArgumentType.word())

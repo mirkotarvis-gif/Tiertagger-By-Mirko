@@ -2,15 +2,20 @@
   "schemaVersion": 1,
   "id": "tiertags",
   "version": "${version}",
-     "name": "Mirko's TierTagger",
-  "description": "Shows players' MCTiers, PvPTiers and SubTiers rankings on their nametag. Use /tiers <player> for a full profile.",
-  "authors": ["mirkotarvis"],
+  "name": "Mirko's TierTagger",
+  "description": "Shows players' MCTiers, PvPTiers, SubTiers and GoatTierList rankings on their nametag and in the tab list. Use /tiers <player> for a full profile and /tiertags (or Mod Menu) for settings.",
+  "authors": [
+    "mirkotarvis"
+  ],
   "license": "MPL-2.0",
-     "icon": "assets/tiertags/icon_new.png",
+  "icon": "assets/tiertags/icon_new.png",
   "environment": "client",
   "entrypoints": {
     "client": [
       "dev.tiertags.TierTags"
+    ],
+    "modmenu": [
+      "dev.tiertags.config.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -21,5 +26,11 @@
     "minecraft": "~1.21.11",
     "java": ">=21",
     "fabric-api": "*"
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+  "contact": {
+    "sources": "https://github.com/mirkotarvis-gif/Tiertagger-By-Mirko"
   }
 }
