@@ -41,6 +41,7 @@ public final class Modes {
             Map.entry("trident", new Mode("Trident", '', 0x579B8C)),
             // GoatTierList
             Map.entry("diapot", new Mode("Diamond Pot", '\uea04', 0x55FFFF)),
+            Map.entry("spear", new Mode("Spear", '\uea08', 0x9AA7B0)),
             Map.entry("spearmace", new Mode("Spear Mace", '\uea08', 0x9AA7B0))
     );
 

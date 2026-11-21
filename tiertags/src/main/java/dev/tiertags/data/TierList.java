@@ -9,7 +9,7 @@ public enum TierList {
     MCTIERS("MCTiers", "M", 0xFF5D5D) {
         @Override
         public String profileUrl(UUID uuid) {
-            return "https://mctiers.com/api/v2/profile/" + uuid;
+            return "https://mctiers.net/api/v2/profile/" + uuid;
         }
 
         @Override

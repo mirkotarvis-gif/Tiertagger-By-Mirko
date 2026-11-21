@@ -102,7 +102,7 @@ public class TierTagsConfigScreen extends Screen {
                         .build());
             }
             case SOURCES -> {
-                toggle(0, 0, "MCTiers", () -> cfg().mctiers, v -> cfg().mctiers = v, "mctiers.com");
+                toggle(0, 0, "MCTiers", () -> cfg().mctiers, v -> cfg().mctiers = v, "mctiers.net");
                 toggle(1, 0, "PvPTiers", () -> cfg().pvptiers, v -> cfg().pvptiers = v, "pvptiers.com");
                 toggle(0, 1, "SubTiers", () -> cfg().subtiers, v -> cfg().subtiers = v, "subtiers.net");
                 toggle(1, 1, "GoatTierList", () -> cfg().goattierlist, v -> cfg().goattierlist = v,

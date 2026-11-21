@@ -34,7 +34,7 @@ Push to GitHub: the included workflow builds it, download the jar from the run's
 Or locally with JDK 21: `./gradlew build` (jar in `build/libs/`).
 
 ## APIs used
-- `https://mctiers.com/api/v2/profile/<uuid>`
+- `https://mctiers.net/api/v2/profile/<uuid>`
 - `https://pvptiers.com/api/profile/<uuid without dashes>`
 - `https://subtiers.net/api/v2/profile/<uuid>`
 - `https://goattierlist.zenvex.cloud/api/tiers` (whole list, matched by name, refreshed every 5 minutes)
