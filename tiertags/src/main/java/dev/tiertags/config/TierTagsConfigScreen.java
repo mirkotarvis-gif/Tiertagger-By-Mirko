@@ -6,7 +6,6 @@ import dev.tiertags.data.TierCache;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
@@ -107,6 +106,8 @@ public class TierTagsConfigScreen extends Screen {
                 toggle(0, 1, "SubTiers", () -> cfg().subtiers, v -> cfg().subtiers = v, "subtiers.net");
                 toggle(1, 1, "GoatTierList", () -> cfg().goattierlist, v -> cfg().goattierlist = v,
                         "goattierlist.zenvex.cloud (matched by player name)");
+                toggle(0, 2, "MCPVP", () -> cfg().mcpvp, v -> cfg().mcpvp = v, "mcpvp.com (beta tiers)");
+                toggle(1, 2, "PvPHQ", () -> cfg().pvphq, v -> cfg().pvphq = v, "pvphq.com");
             }
             case DISPLAY -> {
                 cycle(0, 0, "Tags", () -> String.valueOf(cfg().tagCount),
@@ -120,23 +121,31 @@ public class TierTagsConfigScreen extends Screen {
                 toggle(1, 2, "Bold", () -> cfg().bold, v -> cfg().bold = v, null);
                 toggle(0, 3, "Retired tiers", () -> cfg().showRetired, v -> cfg().showRetired = v, null);
                 toggle(1, 3, "Source letter", () -> cfg().sourceLetter, v -> cfg().sourceLetter = v,
-                        "Prefix tiers with the list they came from: M, P, S or G");
+                        "Prefix tiers with the list they came from: M, P, S, G, MP or HQ");
             }
             case TIER_COLORS -> {
                 String[] keys = TierTagsConfig.TIER_KEYS;
                 for (int i = 0; i < keys.length; i++) {
                     String key = keys[i];
-                    String label = key.equals("RETIRED") ? "Retired" : key;
-                    colorField(i % 2, i / 2, label, () -> cfg().tierColors.get(key), v -> cfg().tierColors.put(key, v));
+                    String label = switch (key) {
+                        case "RETIRED" -> "Retired";
+                        case "T6" -> "Tier 6";
+                        default -> key;
+                    };
+                    String sample = key.equals("RETIRED") ? "RHT1" : key.equals("T6") ? "HT6" : key;
+                    colorField(i % 3, i / 3, label, sample, () -> cfg().tierColors.get(key),
+                            v -> cfg().tierColors.put(key, v), TierTagsConfig.defaultTierColor(key));
                 }
                 int i = keys.length;
-                colorField(i % 2, i / 2, "Brackets", () -> cfg().bracketColor, v -> cfg().bracketColor = v);
+                colorField(i % 3, i / 3, "Brackets", "[ ]", () -> cfg().bracketColor, v -> cfg().bracketColor = v,
+                        TierTagsConfig.defaultTierColor("BRACKETS"));
             }
             case REGION_COLORS -> {
                 String[] keys = TierTagsConfig.REGION_KEYS;
                 for (int i = 0; i < keys.length; i++) {
                     String key = keys[i];
-                    colorField(i % 2, i / 2, key, () -> cfg().regionColors.get(key), v -> cfg().regionColors.put(key, v));
+                    colorField(i % 3, i / 3, key, key, () -> cfg().regionColors.get(key),
+                            v -> cfg().regionColors.put(key, v), TierTagsConfig.defaultRegionColor(key));
                 }
             }
         }
@@ -179,20 +188,15 @@ public class TierTagsConfigScreen extends Screen {
         this.addRenderableWidget(b.build());
     }
 
-    private void colorField(int col, int row, String label, Supplier<String> get, Consumer<String> set) {
-        int x = colX(col);
+    /** A color button: shows the current color, click it to open the color picker. */
+    private void colorField(int col, int row, String label, String sample, Supplier<String> get, Consumer<String> set, String defaultHex) {
+        int x = this.width / 2 - 155 + col * 105;
         int y = rowY(row);
-        EditBox box = new EditBox(this.font, x + 74, y, COL_W - 74, 20, Component.literal(label + " color"));
-        box.setMaxLength(7);
-        box.setValue(get.get() == null ? "" : get.get());
-        box.setResponder(text -> {
-            if (TierTagsConfig.parseColor(text) >= 0) {
-                String hex = text.trim().toUpperCase(Locale.ROOT);
-                set.accept(hex.startsWith("#") ? hex : "#" + hex);
-                TierTagsConfig.changed();
+        this.addRenderableWidget(Button.builder(Component.literal(label), b -> {
+            if (this.minecraft != null) {
+                this.minecraft.setScreen(new ColorPickerScreen(this, label, sample, get, set, defaultHex));
             }
-        });
-        this.addRenderableWidget(box);
+        }).bounds(x, y, 100, 20).tooltip(Tooltip.create(Component.literal("Click to change"))).build());
         colorFields.add(new ColorField(x, y, label, get));
     }
 
@@ -229,12 +233,11 @@ public class TierTagsConfigScreen extends Screen {
         graphics.drawCenteredString(this.font, this.title, this.width / 2, 12, WHITE);
 
         for (ColorField f : colorFields) {
-            graphics.drawString(this.font, f.label(), f.x(), f.y() + 6, WHITE);
             int color = TierTagsConfig.parseColor(f.value().get());
-            int sx = f.x() + 56;
-            int sy = f.y() + 3;
-            graphics.fill(sx - 1, sy - 1, sx + 15, sy + 15, GRAY);
-            graphics.fill(sx, sy, sx + 14, sy + 14, color < 0 ? 0xFF000000 : 0xFF000000 | color);
+            int sx = f.x() + 100 - 17;
+            int sy = f.y() + 4;
+            graphics.fill(sx - 1, sy - 1, sx + 13, sy + 13, 0xFF000000);
+            graphics.fill(sx, sy, sx + 12, sy + 12, 0xFF000000 | Math.max(0, color));
         }
 
         // Live preview of a nametag with the current settings

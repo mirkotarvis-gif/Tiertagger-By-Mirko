@@ -3,7 +3,7 @@
   "id": "tiertags",
   "version": "${version}",
   "name": "Mirko's TierTagger",
-  "description": "Shows players' MCTiers, PvPTiers, SubTiers and GoatTierList rankings on their nametag and in the tab list. Use /tiers <player> for a full profile and /tiertags (or Mod Menu) for settings.",
+  "description": "Shows players' MCTiers, PvPTiers, SubTiers, MCPVP, PvPHQ and GoatTierList rankings on their nametag and in the tab list. Use /tiers <player> for a full profile and /tiertags (or Mod Menu) for settings.",
   "authors": [
     "mirkotarvis"
   ],

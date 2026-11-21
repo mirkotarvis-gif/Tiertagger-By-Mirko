@@ -42,8 +42,31 @@ public final class Modes {
             // GoatTierList
             Map.entry("diapot", new Mode("Diamond Pot", '\uea04', 0x55FFFF)),
             Map.entry("spear", new Mode("Spear", '\uea08', 0x9AA7B0)),
-            Map.entry("spearmace", new Mode("Spear Mace", '\uea08', 0x9AA7B0))
+            Map.entry("spearmace", new Mode("Spear Mace", '\uea08', 0x9AA7B0)),
+            // MCPVP kits
+            Map.entry("shield", new Mode("Shield", '\uea01', 0xC8C8C8)),
+            Map.entry("early_game", new Mode("Early Game", '\uea13', 0xFFAA00)),
+            Map.entry("end_game", new Mode("End Game", '\uea01', 0xFF55FF)),
+            Map.entry("late_game", new Mode("Late Game", '\uea07', 0x7D4A40))
     );
+
+    /** Other names the sites use for gamemodes we already know. */
+    private static final Map<String, String> ALIASES = Map.ofEntries(
+            Map.entry("nethpot", "neth_pot"),
+            Map.entry("netherite_pot", "neth_pot"),
+            Map.entry("diasmp", "dia_smp"),
+            Map.entry("diamond_smp", "dia_smp"),
+            Map.entry("cart", "minecart"),
+            Map.entry("cartht", "minecart"),
+            Map.entry("ht_cart", "minecart"),
+            Map.entry("spear_mace", "spearmace")
+    );
+
+    /** Turns a site's gamemode name ("Netherite-Pot", "diamond_smp") into our id ("neth_pot", "dia_smp"). */
+    public static String normalize(String raw) {
+        String id = raw.trim().toLowerCase(Locale.ROOT).replace('-', '_').replace(' ', '_');
+        return ALIASES.getOrDefault(id, id);
+    }
 
     /** Gamemode ids for the "Gamemode" setting, in a stable order. */
     public static final List<String> IDS = MODES.keySet().stream().sorted().toList();

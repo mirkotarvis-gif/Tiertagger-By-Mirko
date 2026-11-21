@@ -29,13 +29,6 @@ public final class GoatTierList {
     private static final long RETRY_MS = 60 * 1000L;
     private static final Pattern TIER = Pattern.compile("([HL])T([1-5])");
 
-    /** GoatTierList mode names that already exist in {@link Modes} under another id. */
-    private static final Map<String, String> MODE_IDS = Map.of(
-            "nethpot", "neth_pot",
-            "diasmp", "dia_smp",
-            "cartht", "minecart"
-    );
-
     private static Map<String, Profile> players = null;
     private static long fetchedAt = 0;
 
@@ -77,12 +70,12 @@ public final class GoatTierList {
         for (Map.Entry<String, JsonElement> modeEntry : modes.entrySet()) {
             if (!modeEntry.getValue().isJsonObject()) continue;
             String rawMode = modeEntry.getKey().toLowerCase(Locale.ROOT);
-            String mode = MODE_IDS.getOrDefault(rawMode, rawMode);
+            String mode = Modes.normalize(rawMode);
 
             for (Map.Entry<String, JsonElement> tierEntry : modeEntry.getValue().getAsJsonObject().entrySet()) {
                 Matcher m = TIER.matcher(tierEntry.getKey().toUpperCase(Locale.ROOT));
                 if (!m.matches() || !tierEntry.getValue().isJsonArray()) continue; // skips "LTM" etc.
-                int pos = m.group(1).equals("H") ? 0 : 1;
+                int pos = m.group(1).equals("H") ? Ranking.HIGH : Ranking.LOW;
                 int tier = Integer.parseInt(m.group(2));
 
                 for (JsonElement p : tierEntry.getValue().getAsJsonArray()) {
@@ -95,7 +88,7 @@ public final class GoatTierList {
                     List<Ranking> list = rankings.computeIfAbsent(key, k -> new ArrayList<>());
                     // the same player in two tiers of one mode: keep the better one
                     Ranking r = new Ranking(mode, tier, pos, null, null, 0L, false);
-                    list.removeIf(old -> old.mode().equals(mode) && old.shownTier() * 2 + old.shownPos() > tier * 2 + pos);
+                    list.removeIf(old -> old.mode().equals(mode) && old.order() > Ranking.order(tier, pos));
                     if (list.stream().noneMatch(old -> old.mode().equals(mode))) list.add(r);
                 }
             }

@@ -36,7 +36,9 @@ public final class TierTagsConfig {
         }
     }
 
-    public static final String[] TIER_KEYS = {"HT1", "LT1", "HT2", "LT2", "HT3", "LT3", "HT4", "LT4", "HT5", "LT5", "RETIRED"};
+    public static final String[] TIER_KEYS = {
+            "HT1", "MT1", "LT1", "HT2", "MT2", "LT2", "HT3", "MT3", "LT3",
+            "HT4", "MT4", "LT4", "HT5", "MT5", "LT5", "T6", "RETIRED"};
     public static final String[] REGION_KEYS = {"NA", "EU", "SA", "AS", "AU", "OC", "ME", "AF"};
 
     public static final Map<String, String> DEFAULT_TIER_COLORS = new LinkedHashMap<>();
@@ -44,15 +46,21 @@ public final class TierTagsConfig {
 
     static {
         DEFAULT_TIER_COLORS.put("HT1", "#E8BA3A");
+        DEFAULT_TIER_COLORS.put("MT1", "#DEB648");
         DEFAULT_TIER_COLORS.put("LT1", "#D5B355");
         DEFAULT_TIER_COLORS.put("HT2", "#C4D3E7");
+        DEFAULT_TIER_COLORS.put("MT2", "#B2BDCC");
         DEFAULT_TIER_COLORS.put("LT2", "#A0A7B2");
         DEFAULT_TIER_COLORS.put("HT3", "#F89F5A");
+        DEFAULT_TIER_COLORS.put("MT3", "#DF8D4E");
         DEFAULT_TIER_COLORS.put("LT3", "#C67B42");
         DEFAULT_TIER_COLORS.put("HT4", "#81749A");
+        DEFAULT_TIER_COLORS.put("MT4", "#73688A");
         DEFAULT_TIER_COLORS.put("LT4", "#655B79");
         DEFAULT_TIER_COLORS.put("HT5", "#8F82A8");
+        DEFAULT_TIER_COLORS.put("MT5", "#7A6E90");
         DEFAULT_TIER_COLORS.put("LT5", "#655B79");
+        DEFAULT_TIER_COLORS.put("T6", "#5A5A5A");
         DEFAULT_TIER_COLORS.put("RETIRED", "#A2D6FF");
 
         DEFAULT_REGION_COLORS.put("NA", "#FF6A6E");
@@ -79,6 +87,8 @@ public final class TierTagsConfig {
     public boolean pvptiers = true;
     public boolean subtiers = true;
     public boolean goattierlist = true;
+    public boolean mcpvp = true;
+    public boolean pvphq = true;
 
     // ---- Display ----
     /** 1 or 2 tags around the name. */
@@ -166,6 +176,14 @@ public final class TierTagsConfig {
     public void resetTierColors() {
         tierColors = new LinkedHashMap<>(DEFAULT_TIER_COLORS);
         bracketColor = "#AAAAAA";
+    }
+
+    public static String defaultTierColor(String key) {
+        return key.equals("BRACKETS") ? "#AAAAAA" : DEFAULT_TIER_COLORS.getOrDefault(key, "#FFFFFF");
+    }
+
+    public static String defaultRegionColor(String key) {
+        return DEFAULT_REGION_COLORS.getOrDefault(key, "#FFFFFF");
     }
 
     public void resetRegionColors() {

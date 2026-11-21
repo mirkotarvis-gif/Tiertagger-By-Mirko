@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 /** Fetches and caches tiers. Requests run on a small thread pool so big servers don't spam the APIs. */
 public final class TierCache {
-    private static final String USER_AGENT = "TierTags/1.1 (Fabric mod for Minecraft 1.21.11)";
+    private static final String USER_AGENT = "TierTags/1.2 (Fabric mod for Minecraft 1.21.11)";
     private static final long REFRESH_AFTER_MS = 15 * 60 * 1000L; // re-fetch found/not-found data after 15 min
     private static final long RETRY_ERROR_MS = 60 * 1000L;        // retry failed requests after 1 min
     private static final long RETRY_LOOKUP_MS = 5 * 60 * 1000L;   // retry failed Mojang lookups after 5 min
@@ -102,6 +102,8 @@ public final class TierCache {
                 if (knownName != null) fetchByName(uuid, knownName, list, tiers);
             } else if (apiUuid == null) {
                 // still resolving the cracked name, try again next frame
+            } else if (apiUuid.isPresent() && list.bulk()) {
+                fetchBulk(uuid, apiUuid.get(), list, tiers);
             } else if (apiUuid.isPresent()) {
                 fetch(uuid, apiUuid.get(), list, tiers);
             } else {
@@ -160,6 +162,25 @@ public final class TierCache {
         });
     }
 
+    private static void fetchBulk(UUID cacheKey, UUID uuid, TierList list, PlayerTiers tiers) {
+        String key = cacheKey + "/" + list;
+        if (IN_FLIGHT.putIfAbsent(key, Boolean.TRUE) != null) return;
+
+        POOL.execute(() -> {
+            try {
+                Profile profile = McpvpList.data(HTTP, USER_AGENT).get(uuid);
+                PlayerTiers.Status status = profile == null ? PlayerTiers.Status.NOT_FOUND : PlayerTiers.Status.FOUND;
+                tiers.set(list, new PlayerTiers.Result(status, profile, System.currentTimeMillis()));
+            } catch (Exception e) {
+                if (e instanceof InterruptedException) Thread.currentThread().interrupt();
+                TierTags.LOGGER.warn("Failed to fetch {} tiers for {}: {}", list.displayName(), uuid, e.toString());
+                tiers.set(list, new PlayerTiers.Result(PlayerTiers.Status.ERROR, null, System.currentTimeMillis()));
+            } finally {
+                IN_FLIGHT.remove(key);
+            }
+        });
+    }
+
     private static void fetch(UUID cacheKey, UUID uuid, TierList list, PlayerTiers tiers) {
         String key = cacheKey + "/" + list;
         if (IN_FLIGHT.putIfAbsent(key, Boolean.TRUE) != null) return;
@@ -178,7 +199,7 @@ public final class TierCache {
                 if (res.statusCode() == 404) {
                     tiers.set(list, new PlayerTiers.Result(PlayerTiers.Status.NOT_FOUND, null, now));
                 } else if (res.statusCode() == 200) {
-                    Profile profile = Profile.parse(res.body());
+                    Profile profile = list.parse(res.body());
                     PlayerTiers.Status status = profile == null ? PlayerTiers.Status.NOT_FOUND : PlayerTiers.Status.FOUND;
                     tiers.set(list, new PlayerTiers.Result(status, profile, now));
                 } else {

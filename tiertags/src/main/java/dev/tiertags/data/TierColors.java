@@ -8,7 +8,7 @@ public final class TierColors {
     public static int of(Ranking ranking) {
         TierTagsConfig cfg = TierTagsConfig.get();
         if (ranking.retired()) return cfg.tierColor("RETIRED");
-        return cfg.tierColor((ranking.shownPos() == 0 ? "H" : "L") + "T" + ranking.shownTier());
+        return cfg.tierColor(ranking.colorKey());
     }
 
     public static int region(String region) {
