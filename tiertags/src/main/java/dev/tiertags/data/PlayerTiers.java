@@ -162,6 +162,10 @@ public final class PlayerTiers {
         if (!cfg.brackets.open.isEmpty()) {
             out.append(Component.literal(cfg.brackets.open).withStyle(s -> s.withColor(bracket).withBold(false)));
         }
+        if (cfg.listLogo) {
+            out.append(t.list().logo());
+            out.append(Component.literal(" ").withStyle(st -> st.withBold(false)));
+        }
         if (cfg.sourceLetter) {
             out.append(Component.literal(t.list().letter()).withStyle(s -> s.withColor(t.list().color()).withBold(cfg.bold)));
         }

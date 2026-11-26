@@ -102,6 +102,8 @@ public final class TierTagsConfig {
     public boolean showRetired = true;
     /** Prefix tiers with a short source letter, e.g. "M" for MCTiers. */
     public boolean sourceLetter = false;
+    /** Show the logo of the tierlist the tier came from, next to the tier. */
+    public boolean listLogo = false;
 
     // ---- Colors ----
     public Map<String, String> tierColors = new LinkedHashMap<>(DEFAULT_TIER_COLORS);

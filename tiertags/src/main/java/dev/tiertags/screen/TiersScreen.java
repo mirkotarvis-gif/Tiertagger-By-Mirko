@@ -100,7 +100,7 @@ public class TiersScreen extends Screen {
         int tabWidth = Math.min(80, (this.width - 20) / TierList.values().length - gap);
         int tabsX = this.width / 2 - (TierList.values().length * (tabWidth + gap) - gap) / 2;
         for (TierList list : TierList.values()) {
-            Button button = Button.builder(Component.literal(list.displayName()), b -> {
+            Button button = Button.builder(Component.empty().append(list.logo()).append(" " + list.displayName()), b -> {
                         this.tab = list;
                         this.rebuildWidgets();
                     })

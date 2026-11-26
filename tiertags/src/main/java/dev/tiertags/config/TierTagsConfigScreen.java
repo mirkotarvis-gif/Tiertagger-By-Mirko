@@ -122,6 +122,8 @@ public class TierTagsConfigScreen extends Screen {
                 toggle(0, 3, "Retired tiers", () -> cfg().showRetired, v -> cfg().showRetired = v, null);
                 toggle(1, 3, "Source letter", () -> cfg().sourceLetter, v -> cfg().sourceLetter = v,
                         "Prefix tiers with the list they came from: M, P, S, G, MP or HQ");
+                toggle(0, 4, "Tierlist logo", () -> cfg().listLogo, v -> cfg().listLogo = v,
+                        "Show the logo of the tierlist each tier came from");
             }
             case TIER_COLORS -> {
                 String[] keys = TierTagsConfig.TIER_KEYS;

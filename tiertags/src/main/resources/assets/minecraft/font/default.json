@@ -179,6 +179,60 @@
       "chars": [
         "\uea14"
       ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:logos/mctiers.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea20"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:logos/pvptiers.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea21"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:logos/subtiers.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea22"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:logos/mcpvp.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea23"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:logos/pvphq.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea24"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "tiertags:logos/goattierlist.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": [
+        "\uea25"
+      ]
     }
   ]
 }

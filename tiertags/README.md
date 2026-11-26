@@ -19,7 +19,7 @@ Shows player tiers from **MCTiers**, **PvPTiers**, **SubTiers**, **MCPVP**, **Pv
 |---|---|
 | General | Enabled, Nametags, Tab list, Server nametags, Cracked lookup, Refresh all tiers |
 | Sources | Turn MCTiers / PvPTiers / SubTiers / MCPVP / PvPHQ / GoatTierList on or off |
-| Display | 1 or 2 tags, one fixed gamemode or the best, icons, region (off/left/right), brackets, bold, retired tiers, source letter (M/P/S/MP/HQ/G) |
+| Display | 1 or 2 tags, one fixed gamemode or the best, icons, region (off/left/right), brackets, bold, retired tiers, source letter (M/P/S/MP/HQ/G), tierlist logo |
 | Tier colors | Every tier (HT/MT/LT 1-5, tier 6), retired and brackets. Click one to open the color picker: RGB sliders, hex code, 16 presets, random and default |
 | Regions | Same color picker for every region (NA, EU, SA, AS, AU, OC, ME, AF) |
 
@@ -46,5 +46,6 @@ Or locally with JDK 21: `./gradlew build` (jar in `build/libs/`).
 Results are cached for 15 minutes; failed requests retry after 1 minute.
 
 ## Credits
+Tierlist logos are the sites' own icons, used to show where a tier comes from.
 Gamemode icons are from [TierTagger](https://github.com/mctiers-dev/TierTagger)
 (MPL-2.0, (c) MCTiers). Not affiliated with any of the tierlists.
